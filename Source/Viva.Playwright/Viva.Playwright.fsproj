@@ -3,11 +3,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Extensions/BrowserTypeExtensions.fs" />
-    <Compile Include="Helpers/Playwright.fs" />
-    <Compile Include="Services/PlaywrightService.fs" />
-    <Compile Include="Services/BroswerService.fs" />
-    <Compile Include="Services/EdgeBrowserService.fs" />
+    <Compile Include="Context/PlaywrightContext.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.Core" />
