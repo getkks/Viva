@@ -1,0 +1,18 @@
+---
+services:
+    webtop:
+        image: lscr.io/linuxserver/msedge:latest
+        container_name: playwright-dev
+        security_opt:
+            - seccomp:unconfined #optional
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Etc/UTC
+            - SUBFOLDER=/ #optional
+            # - TITLE=Webtop #optional
+        volumes:
+            - ../..:/workspaces:cached
+        ports:
+            - 3000:3000
+            - 3001:3001
