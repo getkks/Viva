@@ -5,13 +5,13 @@ name: .NET
 
 on:
   push:
-    branches: [ "main", "development" ]
+    branches: [ "main", "develop" ]
     paths-ignore:
     - 'changelog.md'
     - 'license'
     - 'readme.md'
   pull_request:
-    branches:  [ "main", "development" ]
+    branches:  [ "main", "develop" ]
     paths-ignore:
     - 'changelog.md'
     - 'license'
