@@ -49,7 +49,7 @@ type PlaywrightContext = {
 }
 
 module PlaywrightContext =
-    let createPlaywrightContext(factory: ILoggerFactory) =
+    let internal createPlaywright(factory: ILoggerFactory) =
         let logger = factory.CreateLogger<PlaywrightContext>()
 
         Playwright.CreateAsync().AwaitResult()
@@ -60,7 +60,7 @@ module PlaywrightContext =
             LoggerFactory = factory
         |})
 
-    let install (typeOfBrowser: TypeOfBrowser) (logger: ILogger) =
+    let internal install (typeOfBrowser: TypeOfBrowser) (logger: ILogger) =
         result {
             logger.LogInformation("Installing {browser}...", typeOfBrowser)
 
@@ -78,9 +78,9 @@ module PlaywrightContext =
         |> Result.tee(fun _ -> logger.LogInformation("{browser} installed.", typeOfBrowser))
         |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to install {browser}."))
 
-    let createBrowser
+    let internal createBrowser
         (typeOfBrowser: TypeOfBrowser)
-        (options: BrowserTypeLaunchOptions)
+        (options: BrowserTypeLaunchOptions | null)
         (seed:
             {|
                 LoggerFactory: ILoggerFactory
@@ -89,7 +89,13 @@ module PlaywrightContext =
         =
         let logger = seed.LoggerFactory.CreateLogger<PlaywrightContext>()
         let browserType = typeOfBrowser.GetBrowserType seed.Playwright
-        options.Channel <- typeOfBrowser.Channel
+
+        let options =
+            match options with
+            | NonNull options ->
+                options.Channel <- typeOfBrowser.Channel
+                options
+            | _ -> BrowserTypeLaunchOptions(Channel = typeOfBrowser.Channel)
 
         browserType.LaunchAsync(options).AwaitResult()
         |> Result.orElseWith(fun _ ->
@@ -107,8 +113,8 @@ module PlaywrightContext =
             TypeOfBrowser = typeOfBrowser
         |})
 
-    let createContext
-        (options: BrowserNewContextOptions)
+    let internal createContext
+        (options: BrowserNewContextOptions | null)
         (seed:
             {|
                 Browser: IBrowser
@@ -130,6 +136,12 @@ module PlaywrightContext =
             Playwright = seed.Playwright
             TypeOfBrowser = seed.TypeOfBrowser
         })
+
+    let createPlaywrightContext typeOfBrowser launchOptions newContextOptions factory =
+        factory
+        |> createPlaywright
+        >>= createBrowser typeOfBrowser launchOptions
+        >>= createContext newContextOptions
 
     let closeContext(context: PlaywrightContext) =
         let logger = context.LoggerFactory.CreateLogger<PlaywrightContext>()

@@ -5,7 +5,6 @@ open Viva.Runtime.Helpers
 open Viva.Runtime.Helpers.Operator.Result
 open Viva.Runtime.Extensions
 open Viva.Playwright
-open Viva.Playwright.PlaywrightContext
 
 let factory =
     LoggerFactory.Create(fun builder ->
@@ -59,9 +58,10 @@ let openPages uris (context: PlaywrightContext) =
     uris |> Seq.traverseResultA(fun uri -> openPage uri context)
 
 factory
-|> createPlaywrightContext
->>= createBrowser MsEdge (BrowserTypeLaunchOptions(Headless = false))
->>= createContext(BrowserNewContextOptions(ViewportSize = ViewportSize.NoViewport))
+|> PlaywrightContext.createPlaywrightContext
+    MsEdge
+    (BrowserTypeLaunchOptions(Headless = false))
+    (BrowserNewContextOptions(ViewportSize = ViewportSize.NoViewport))
 <!> (fun context ->
     [
         "https://playwright.dev/"
@@ -71,7 +71,7 @@ factory
 
     context
 )
->>= closeContext
+>>= PlaywrightContext.closeContext
 |> ignore
 
 factory.Dispose()
