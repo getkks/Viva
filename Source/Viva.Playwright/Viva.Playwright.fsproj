@@ -8,6 +8,10 @@
   <ItemGroup>
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="FsToolkit.ErrorHandling" />
+    <PackageReference Include="GitVersion.MsBuild">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="IcedTasks" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Microsoft.Playwright" />

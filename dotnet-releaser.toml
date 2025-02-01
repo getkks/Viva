@@ -1,0 +1,40 @@
+# configuration file for dotnet-releaser
+[msbuild]
+project = "Viva.sln"
+
+[github]
+user = "getkks"
+repo = "Viva"
+
+[[pack]]
+publish = false
+rid = ["win-arm"]
+
+[[pack]]
+publish = false
+rid = ["linux-arm"]
+
+[[pack]]
+publish = false
+rid = ["rhel-x64"]
+
+[[pack]]
+publish = false
+rid = ["osx-arm64"]
+
+[[changelog.category]]
+title = "## 📚 Documentation"
+labels = [
+	"documentation",
+	"doc",
+	"docs",
+	"category: documentation",
+	"category: doc",
+	"category: docs",
+]
+order = 80
+
+[[changelog.category]]
+title = "## 🧰 Maintenance"
+labels = ["maintenance", "ci", "chore", "category: ci", "category: chore"]
+order = 50

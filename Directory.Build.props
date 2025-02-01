@@ -23,6 +23,15 @@
         <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
         <Tailcalls>true</Tailcalls>
     </PropertyGroup>
+	<PropertyGroup>
+		<PackageLicenseExpression>Unlicense</PackageLicenseExpression>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<Copyright>Karthik K Selvan</Copyright>
+		<Authors>Karthik K Selvan</Authors>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<PackageLicenseExpression>Unlicense</PackageLicenseExpression>
+		<UseProjectNamespaceForGitVersionInformation>true</UseProjectNamespaceForGitVersionInformation>
+	</PropertyGroup>
     <PropertyGroup Condition="'$(MSBuildProjectExtension)'=='.fsproj'">
         <OtherFlags>$(OtherFlags) --utf8output --nologo --consolecolors</OtherFlags>
         <!-- Improve compiler performance -->

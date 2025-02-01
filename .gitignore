@@ -477,3 +477,6 @@ FodyWeavers.xsd
 # End of https://mrkandreev.name/snippets/gitignore-generator/#JetBrains,VisualStudio,VisualStudioCode,C#,F#
 .github
 .aider*
+
+# dotnet-releaser
+artifacts-dotnet-releaser/

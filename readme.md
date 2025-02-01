@@ -21,8 +21,7 @@ Viva is ETL project written in [F#](https://learn.microsoft.com/en-us/dotnet/fsh
 * [ List the key features of the project ]
 
 ## Requirements
-
-* [ List any dependencies or requirements for the project, including versions ]
+	- Requires Dotnet 9.0
 
 ## Installation
 
@@ -34,7 +33,16 @@ Viva is ETL project written in [F#](https://learn.microsoft.com/en-us/dotnet/fsh
 
 ## Contributing
 
-[ Describe how to contribute to the project, including any guidelines or requirements for pull requests ]
+- ### Docker
+	- You need Docker for the time being to test playwright related code. Podman fails due to issue with (or missing support for) BuildKit.
+	- The base image includes browser based KASMVnc support
+- ### VS Code
+	- #### Dev Container
+		- Creates everything necessary on top of docker
+		- Installs dotnet post creation of the container for the first time
+		- Install all the dotnet tools and restores all the packages
+		- Sets up all the extension
+	- Other IDEs (Visual Studio or Rider) were not tested.
 
 ## License
 
