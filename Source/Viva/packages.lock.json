@@ -75,30 +75,15 @@
           "Microsoft.Extensions.Options": "9.0.1"
         }
       },
-      "Microsoft.NET.ILLink.Tasks": {
-        "type": "Direct",
-        "requested": "[9.0.1, )",
-        "resolved": "9.0.1",
-        "contentHash": "BKFAkdhUUJivAoKuSWcT23WH9E+AWQMJootzt9X+lnesOD2a2yNIe1ZQFtxB8H3ayskLBD5gYyIbj5GIfw7rZg=="
-      },
       "Microsoft.Playwright": {
         "type": "Direct",
-        "requested": "[1.49.0, )",
-        "resolved": "1.49.0",
-        "contentHash": "90iiSlGcvHKyCy4wCPsmSoDb+/hY719cKrxosrCJzhbkY7iYityx62Ozuhpmjn6CGyrtGdiGDqYFQqS0EunoyA==",
+        "requested": "[1.50.0, )",
+        "resolved": "1.50.0",
+        "contentHash": "Mq7Ro8vosaADFVU9plNbFvIzi+iVaoCY7y8umE+L9lUK+5DrBnKPHTwARYqi0koYsIikKkwNwoBEsceLdP4Udg==",
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
           "System.ComponentModel.Annotations": "5.0.0",
           "System.Text.Json": "6.0.10"
-        }
-      },
-      "Packaging.Targets": {
-        "type": "Direct",
-        "requested": "[0.1.220, )",
-        "resolved": "0.1.220",
-        "contentHash": "4Le/2ffWEORZbLB1G8QiAaFepKqpzA/DILH74tEo/hfpui4W4w5X+TPfseo4lavlnwch9XPLvOBB/Hy0JqfU5w==",
-        "dependencies": {
-          "System.Buffers": "4.5.1"
         }
       },
       "Microsoft.Bcl.AsyncInterfaces": {
@@ -333,11 +318,6 @@
         "resolved": "9.0.1",
         "contentHash": "bHtTesA4lrSGD1ZUaMIx6frU3wyy0vYtTa/hM6gGQu5QNrydObv8T5COiGUWsisflAfmsaFOe9Xvw5NSO99z0g=="
       },
-      "System.Buffers": {
-        "type": "Transitive",
-        "resolved": "4.5.1",
-        "contentHash": "Rw7ijyl1qqRS0YQD/WycNst8hUUMgrMH4FCn1nNm27M4VxchZ1js3fVjQaANHO5f3sN4isvP4a+Met9Y4YomAg=="
-      },
       "System.ComponentModel.Annotations": {
         "type": "Transitive",
         "resolved": "5.0.0",
@@ -377,7 +357,7 @@
           "FsToolkit.ErrorHandling": "[4.18.0, )",
           "IcedTasks": "[0.11.7, )",
           "Microsoft.Extensions.Logging": "[9.0.1, )",
-          "Microsoft.Playwright": "[1.49.0, )",
+          "Microsoft.Playwright": "[1.50.0, )",
           "Viva.Runtime": "[1.0.0, )"
         }
       },
@@ -399,30 +379,6 @@
           "Microsoft.Extensions.DependencyInjection": "9.0.1",
           "Microsoft.Extensions.Logging.Abstractions": "9.0.1",
           "Microsoft.Extensions.Options": "9.0.1"
-        }
-      }
-    },
-    "net9.0/osx-x64": {
-      "Packaging.Targets": {
-        "type": "Direct",
-        "requested": "[0.1.220, )",
-        "resolved": "0.1.220",
-        "contentHash": "4Le/2ffWEORZbLB1G8QiAaFepKqpzA/DILH74tEo/hfpui4W4w5X+TPfseo4lavlnwch9XPLvOBB/Hy0JqfU5w==",
-        "dependencies": {
-          "System.Buffers": "4.5.1"
-        }
-      },
-      "System.Diagnostics.EventLog": {
-        "type": "Transitive",
-        "resolved": "9.0.1",
-        "contentHash": "iVnDpgYJsRaRFnk77kcLA3+913WfWDtnAKrQl9tQ5ahqKANTaJKmQdsuPWWiAPWE9pk1Kj4Pg9JGXWfFYYyakQ=="
-      },
-      "System.Text.Encodings.Web": {
-        "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "Vg8eB5Tawm1IFqj4TVK1czJX89rhFxJo9ELqc/Eiq0eXy13RK00eubyU6TJE6y+GQXjyV5gSfiewDUZjQgSE0w==",
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         }
       }
     }
