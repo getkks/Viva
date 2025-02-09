@@ -77,9 +77,9 @@
       },
       "Microsoft.Playwright": {
         "type": "Direct",
-        "requested": "[1.49.0, )",
-        "resolved": "1.49.0",
-        "contentHash": "90iiSlGcvHKyCy4wCPsmSoDb+/hY719cKrxosrCJzhbkY7iYityx62Ozuhpmjn6CGyrtGdiGDqYFQqS0EunoyA==",
+        "requested": "[1.50.0, )",
+        "resolved": "1.50.0",
+        "contentHash": "Mq7Ro8vosaADFVU9plNbFvIzi+iVaoCY7y8umE+L9lUK+5DrBnKPHTwARYqi0koYsIikKkwNwoBEsceLdP4Udg==",
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
           "System.ComponentModel.Annotations": "5.0.0",
@@ -357,7 +357,7 @@
           "FsToolkit.ErrorHandling": "[4.18.0, )",
           "IcedTasks": "[0.11.7, )",
           "Microsoft.Extensions.Logging": "[9.0.1, )",
-          "Microsoft.Playwright": "[1.49.0, )",
+          "Microsoft.Playwright": "[1.50.0, )",
           "Viva.Runtime": "[1.0.0, )"
         }
       },
