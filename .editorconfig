@@ -8,7 +8,7 @@ tab_width = 4
 trim_trailing_whitespace = true
 end_of_line = lf
 
-[*.{fs,fsx}]
+[*.{fs,fsx,fsi}]
 indent_style = space
 fsharp_array_or_list_multiline_formatter = number_of_items
 fsharp_keep_max_number_of_blank_lines = 1
