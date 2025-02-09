@@ -22,6 +22,9 @@
         <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
         <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
         <Tailcalls>true</Tailcalls>
+		<RepositoryUrl>https://github.com/getkks/Viva</RepositoryUrl>
+		<FsDocsLicenseLink>https://github.com/getkks/Viva/blob/main/LICENSE</FsDocsLicenseLink>
+		<PackageProjectUrl>https://github.com/getkks/Viva</PackageProjectUrl>
     </PropertyGroup>
 	<PropertyGroup>
 		<PackageLicenseExpression>Unlicense</PackageLicenseExpression>

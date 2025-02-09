@@ -480,3 +480,8 @@ FodyWeavers.xsd
 
 # dotnet-releaser
 artifacts-dotnet-releaser/
+
+# FSharp.Formatting
+.fsdocs/
+output/
+tmp/

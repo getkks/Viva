@@ -15,6 +15,20 @@
         "dotnet-releaser"
       ],
       "rollForward": false
+    },
+    "fsdocs-tool": {
+      "version": "20.0.1",
+      "commands": [
+        "fsdocs"
+      ],
+      "rollForward": false
+    },
+    "telplin": {
+      "version": "0.9.6",
+      "commands": [
+        "telplin"
+      ],
+      "rollForward": false
     }
   }
 }
