@@ -10,9 +10,9 @@
     <PackageVersion Include="InfoOf.Fody" Version="2.2.0" PrivateAssets="All" />
     <PackageVersion Include="InlineIL.Fody" Version="1.10.0" PrivateAssets="All" />
     <PackageVersion Include="LocalsInit.Fody" Version="1.1.0" PrivateAssets="All" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.2" />
     <PackageVersion Include="Microsoft.Playwright" Version="1.50.0" />
   </ItemGroup>
 </Project>
