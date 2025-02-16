@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-	<PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.fs" />
-	<None Include="readme.md" Pack="true" PackagePath="\" />
+    <None Include="readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.Core" />

@@ -1,11 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-
   <ItemGroup>
- 	<Compile Include="Helpers/ValueOption.fs" />
+    <Compile Include="Helpers/ValueOption.fs" />
     <Compile Include="Helpers/Result.fs" />
     <Compile Include="Extensions/TaskExtensions.fs" />
   </ItemGroup>
@@ -19,5 +17,4 @@
     <PackageReference Include="IcedTasks" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
   </ItemGroup>
-
 </Project>

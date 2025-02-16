@@ -3,13 +3,10 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-	<Compile Include="Helpers.fsi" />
     <Compile Include="Helpers.fs" />
-	<Compile Include="Context/PlaywrightContext.fsi" />
+    <Compile Include="Context/Context.fs" />
     <Compile Include="Context/PlaywrightContext.fs" />
-	<Compile Include="Context/PageContext.fsi" />
     <Compile Include="Context/PageContext.fs" />
-	<Compile Include="Context/LocatorContext.fsi" />
     <Compile Include="Context/LocatorContext.fs" />
   </ItemGroup>
   <ItemGroup>

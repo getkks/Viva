@@ -18,19 +18,20 @@
 		"vscode": {
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"Ionide.Ionide-fsharp",
-				"Ionide.Ionide-Paket",
-				"ms-dotnettools.csharp",
-				"ms-dotnettools.csdevkit",
-				"poohcom1.csharp-prettier-docs",
 				"Codeium.codeium",
 				"EditorConfig.EditorConfig",
-				"tintoy.msbuild-project-tools",
-				"PrateekMahendrakar.prettyxml",
-				"Tyriar.sort-lines",
-				"johnnywong.vscode-ts-whitespace-converter",
+				"fernandoescolar.vscode-solution-explorer",
 				"Gruntfuggly.todo-tree",
-				"fernandoescolar.vscode-solution-explorer"
+				"icsharpcode.ilspy-vscode",
+				"Ionide.Ionide-fsharp",
+				"Ionide.Ionide-Paket",
+				"johnnywong.vscode-ts-whitespace-converter",
+				"ms-dotnettools.csdevkit",
+				"ms-dotnettools.csharp",
+				"poohcom1.csharp-prettier-docs",
+				"PrateekMahendrakar.prettyxml",
+				"tintoy.msbuild-project-tools",
+				"Tyriar.sort-lines"
 			]
 		}
 	},

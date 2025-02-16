@@ -1,151 +1,26 @@
 namespace Viva.Playwright
 
 open System
+open System.Runtime.CompilerServices
+open System.Runtime.InteropServices
 open Microsoft.Extensions.Logging
 open FsToolkit.ErrorHandling
 open Microsoft.Playwright
 open Viva.Runtime.Helpers
 open Viva.Runtime.Helpers.Operator.Result
 open Viva.Runtime.Extensions
+open Microsoft.FSharp.Core
 
-type TypeOfBrowser =
-    | Chrome
-    | Chromium
-    | MsEdge
-    | Firefox
-    | Webkit
+/// <summary> Extensions for <see cref="PlaywrightContext"/>. </summary>
+/// <category> Extensions </category>
+[<Extension>]
+type PlaywrightContextExtensions =
 
-    override this.ToString() =
-        match this with
-        | Chrome -> "Chrome"
-        | Chromium -> "Chromium"
-        | MsEdge -> "MsEdge"
-        | Firefox -> "Firefox"
-        | Webkit -> "Webkit"
-
-    member this.Channel =
-        match this with
-        | Chrome -> "chrome"
-        | MsEdge -> "msedge"
-        | Chromium
-        | Firefox
-        | Webkit -> ""
-
-    member this.GetBrowserType(playwright: IPlaywright) =
-        match this with
-        | Chrome
-        | Chromium
-        | MsEdge -> playwright.Chromium
-        | Firefox -> playwright.Firefox
-        | Webkit -> playwright.Webkit
-
-type PlaywrightContext = {
-    Browser: IBrowser
-    BrowserContext: IBrowserContext
-    Logger: PlaywrightContext ILogger
-    LoggerFactory: ILoggerFactory
-    Playwright: IPlaywright
-    TypeOfBrowser: TypeOfBrowser
-}
-
-module PlaywrightContext =
-    let internal createPlaywright(factory: ILoggerFactory) =
-        let logger = factory.CreateLogger<PlaywrightContext>()
-
-        Playwright.CreateAsync().AwaitResult()
-        |> Result.tee(fun _ -> logger.LogInformation "Created Playwright instance successfully.")
-        |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to create Playwright instance."))
-        <!> (fun play -> {|
-            Playwright = play
-            LoggerFactory = factory
-        |})
-
-    let internal install (typeOfBrowser: TypeOfBrowser) (logger: ILogger) =
-        result {
-            logger.LogInformation("Installing {browser}...", typeOfBrowser)
-
-            do!
-                Result.requireEqual
-                    (Program.Main [|
-                        "install"
-                        typeOfBrowser.Channel
-                    |])
-                    0
-                    (exn "Failed to install the browser.")
-
-            ()
-        }
-        |> Result.tee(fun _ -> logger.LogInformation("{browser} installed.", typeOfBrowser))
-        |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to install {browser}."))
-
-    let internal createBrowser
-        (typeOfBrowser: TypeOfBrowser)
-        (options: BrowserTypeLaunchOptions)
-        (seed:
-            {|
-                LoggerFactory: ILoggerFactory
-                Playwright: IPlaywright
-            |})
-        =
-        let logger = seed.LoggerFactory.CreateLogger<PlaywrightContext>()
-        let browserType = typeOfBrowser.GetBrowserType seed.Playwright
-
-        let options =
-            match options with
-            | NonNull options ->
-                options.Channel <- typeOfBrowser.Channel
-                options
-            | _ -> BrowserTypeLaunchOptions(Channel = typeOfBrowser.Channel)
-
-        browserType.LaunchAsync(options).AwaitResult()
-        |> Result.orElseWith(fun _ ->
-            result {
-                do! install typeOfBrowser logger
-                return! browserType.LaunchAsync(options).AwaitResult()
-            }
-        )
-        |> Result.tee(fun _ -> logger.LogInformation("Created {browser}.", typeOfBrowser))
-        |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to create {browser}.", typeOfBrowser))
-        <!> (fun browser -> {|
-            Browser = browser
-            Logger = logger
-            LoggerFactory = seed.LoggerFactory
-            Playwright = seed.Playwright
-            TypeOfBrowser = typeOfBrowser
-        |})
-
-    let internal createContext
-        (options: BrowserNewContextOptions)
-        (seed:
-            {|
-                Browser: IBrowser
-                Logger: PlaywrightContext ILogger
-                LoggerFactory: ILoggerFactory
-                Playwright: IPlaywright
-                TypeOfBrowser: TypeOfBrowser
-            |})
-        =
-        let logger = seed.Logger
-
-        seed.Browser.NewContextAsync(options).AwaitResult()
-        |> Result.tee(fun _ -> logger.LogDebug("Created context for {browser}.", seed.TypeOfBrowser))
-        |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to create context for {browser}.", seed.TypeOfBrowser))
-        <!> (fun context -> {
-            Browser = seed.Browser
-            BrowserContext = context
-            Logger = logger
-            LoggerFactory = seed.LoggerFactory
-            Playwright = seed.Playwright
-            TypeOfBrowser = seed.TypeOfBrowser
-        })
-
-    let create(typeOfBrowser, launchOptions, newContextOptions, factory) =
-        factory
-        |> createPlaywright
-        >>= createBrowser typeOfBrowser launchOptions
-        >>= createContext newContextOptions
-
-    let closeContext(context: PlaywrightContext) =
+    /// <summary> Close the <see cref="PlaywrightContext"/>. </summary>
+    /// <param name="context"> The <see cref="PlaywrightContext"/>. </param>
+    /// <returns> Returns <c>unit</c> if successful; otherwise, the error. </returns>
+    [<Extension>]
+    static member Close(context: PlaywrightContext) =
         let logger = context.Logger
         let browserContext = context.BrowserContext
         let browser = context.Browser
@@ -154,19 +29,91 @@ module PlaywrightContext =
             do!
                 browserContext.DisposeAsync().AwaitResult()
                 >>= (fun _ -> browserContext.CloseAsync().AwaitResult())
-                |> Result.tee(fun _ -> logger.LogInformation("Closed browser context."))
                 |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to close browser context.\n{Error}", ex.Message))
+
+            logger.LogInformation "Closed browser context."
 
             do!
                 browser.DisposeAsync().AwaitResult()
                 >>= (fun _ -> browser.CloseAsync().AwaitResult())
-                |> Result.tee(fun _ -> logger.LogInformation("Closed {browser}.", context.TypeOfBrowser))
                 |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to close {browser}.", context.TypeOfBrowser))
+
+            logger.LogInformation("Closed {browser}.", context.TypeOfBrowser)
 
             do!
                 Result.tryCatch(fun _ -> context.Playwright.Dispose())
-                |> Result.tee(fun _ -> logger.LogInformation "Closed Playwright context successfully.")
                 |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to close Playwright context. Error: {Error}", ex.Message))
 
+            logger.LogInformation "Closed Playwright contextare also to successfully."
             context.LoggerFactory.Dispose()
         }
+
+    /// <summary> Create a new <see cref="PlaywrightContext"/>. </summary>
+    /// <param name="typeOfBrowser"> The type of browser to create. </param>
+    /// <param name="factory"> The logger factory. </param>
+    /// <param name="launchOptions"> The launch options. </param>
+    /// <param name="newContextOptions"> The new context options. </param>
+    /// <returns> The <see cref="PlaywrightContext"/>. </returns>
+    [<Extension>]
+    static member Create
+        (
+            typeOfBrowser: TypeOfBrowser,
+            factory: ILoggerFactory,
+            [<Optional; DefaultParameterValue(null: BrowserTypeLaunchOptions | null)>] launchOptions: BrowserTypeLaunchOptions | null,
+            [<Optional; DefaultParameterValue(null: BrowserNewContextOptions | null)>] newContextOptions: BrowserNewContextOptions | null
+        ) =
+        let logger = factory.CreateLogger<PlaywrightContext>()
+
+        result {
+            let! playwright =
+                Playwright.CreateAsync().AwaitResult()
+                |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to create Playwright instance."))
+
+            logger.LogInformation "Created Playwright instance successfully."
+            let browserType = typeOfBrowser.GetBrowserType playwright
+
+            let launchOptions =
+                match launchOptions with
+                | null -> BrowserTypeLaunchOptions()
+                | launchOptions -> launchOptions
+
+            launchOptions.Channel <- typeOfBrowser.Channel
+
+            let! browser =
+                (fun _ -> browserType.LaunchAsync(launchOptions).AwaitResult())
+                |> Result.retryAfter(fun _ -> typeOfBrowser.InstallBrowser logger)
+                |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to create {browser}.", typeOfBrowser))
+
+            logger.LogInformation("Created {browser}.", typeOfBrowser)
+
+            let! context =
+                browser.NewContextAsync(newContextOptions).AwaitResult()
+                |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to create context for {browser}.", typeOfBrowser))
+
+            logger.LogInformation("Created context for {browser}.", typeOfBrowser)
+
+            return {
+                Browser = browser
+                BrowserContext = context
+                Logger = logger
+                LoggerFactory = factory
+                Playwright = playwright
+                TypeOfBrowser = typeOfBrowser
+            }
+        }
+
+    [<Extension>]
+    static member private InstallBrowser(typeOfBrowser: TypeOfBrowser, logger: ILogger) =
+        logger.LogInformation("Installing {browser}...", typeOfBrowser)
+
+        if
+            Program.Main [|
+                "install"
+                typeOfBrowser.Channel
+            |] = 0
+        then
+            logger.LogInformation("{browser} installed successfully.", typeOfBrowser)
+            Ok()
+        else
+            logger.LogError("Failed to install {browser}.", typeOfBrowser)
+            "Failed to install the browser." |> exn |> Error

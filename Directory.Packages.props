@@ -1,18 +1,15 @@
 <Project>
   <ItemGroup>
-    <PackageVersion Include="FSharp.Core" Version="9.0.101" PrivateAssets="All" />
-    <PackageVersion Include="FsToolkit.ErrorHandling" Version="4.18.0" PrivateAssets="All" />
-    <PackageVersion Include="GitVersion.MsBuild" Version="6.1.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageVersion>
-    <PackageVersion Include="IcedTasks" Version="0.11.7" PrivateAssets="All" />
-    <PackageVersion Include="InfoOf.Fody" Version="2.2.0" PrivateAssets="All" />
-    <PackageVersion Include="InlineIL.Fody" Version="1.10.0" PrivateAssets="All" />
-    <PackageVersion Include="LocalsInit.Fody" Version="1.1.0" PrivateAssets="All" />
+    <PackageVersion Include="FSharp.Core" Version="9.0.101" />
+    <PackageVersion Include="FsToolkit.ErrorHandling" Version="4.18.0" />
+    <PackageVersion Include="GitVersion.MsBuild" Version="6.1.0" />
+    <PackageVersion Include="IcedTasks" Version="0.11.7" />
+    <PackageVersion Include="InfoOf.Fody" Version="2.2.0" />
+    <PackageVersion Include="InlineIL.Fody" Version="1.10.0" />
+    <PackageVersion Include="LocalsInit.Fody" Version="1.1.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.2" />
     <PackageVersion Include="Microsoft.Playwright" Version="1.50.0" />
   </ItemGroup>
 </Project>

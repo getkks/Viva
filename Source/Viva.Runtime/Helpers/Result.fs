@@ -10,7 +10,7 @@ module Result =
         | Error(Ok v) -> Ok v
         | Error(Error ex) -> Error ex
 
-    let inline bindOnError binding (value) : Result<'TOut, 'TError> =
+    let inline bindOnError ([<InlineIfLambda>] binding) (value) : Result<'TOut, 'TError> =
         match value with
         | Ok v -> Ok v
         | Error ex -> binding ex
@@ -41,6 +41,20 @@ module Result =
         with :? 'TError as ex ->
             Error ex
 
+    /// <summary> The value is passed to either the <c>onSuccess</c> function if the value is <see cref="Ok" /> or the <c>onError</c> function if the value is <see cref="Error" />. </summary>
+    /// <param name="onSuccess">The function to call if the value is <see cref="Ok" />.</param>
+    /// <param name="onError">The function to call if the value is <see cref="Error" />.</param>
+    /// <param name="value">The value to pass to the function.</param>
+    /// <typeparam name="'T">The type of the value.</typeparam>
+    /// <typeparam name="'TError">The type of the error.</typeparam>
+    /// <returns>The value passed to the function without modification.</returns>
+    let inline passThru ([<InlineIfLambda>] onSuccess: 'T -> unit) ([<InlineIfLambda>] onError: 'TError -> unit) value =
+        match value with
+        | Ok v -> onSuccess v
+        | Error ex -> onError ex
+
+        value
+
     /// <summary> Wraps a function in a <c>try/catch</c> block. </summary>
     /// <param name="f">The function to wrap in a <c>try/catch</c> block.</param>
     /// <returns>A <c>Result</c> containing the result of the function, or an error if the function throws an exception.</returns>
@@ -52,10 +66,33 @@ module Result =
         with :? 'TError as ex ->
             Error ex
 
-    let inline raise value =
+    /// <summary> Raise an exception if the value is an error. </summary>
+    /// <param name="value">The value to check.</param>
+    /// <typeparam name="'T">The type of value.</typeparam>
+    /// <typeparam name="'TError">The type of error.</typeparam>
+    /// <returns>The value if it is an <c>Ok</c>, otherwise raises the exception.</returns>
+    let inline raise(value: Result<'T, 'TError>) : 'T =
         match value with
         | Error ex -> raise ex
         | Ok v -> v
+
+    /// <summary> Retry a function if it returns an error after running the error handler on the error. </summary>
+    /// <param name="handleError">The function to handle the error if <paramref name="toTry"/> returns an error.</param>
+    /// <param name="toTry">The function to try / retry.</param>
+    /// <typeparam name="'TIn">The input type of the function.</typeparam>
+    /// <typeparam name="'TOut">The output type of the function.</typeparam>
+    /// <typeparam name="'TError">The error type of the function.</typeparam>
+    /// <returns>The result of the function.</returns>
+    let inline retryAfter
+        ([<InlineIfLambda>] handleError: 'TError -> Result<'TIn, 'TError>)
+        ([<InlineIfLambda>] toTry: unit -> Result<'TOut, 'TError>)
+        : Result<'TOut, 'TError> =
+        match toTry() with
+        | Ok v -> Ok v
+        | Error ex ->
+            match handleError ex with
+            | Ok _ -> toTry()
+            | Error ex -> Error ex
 
     /// <summary> Requires a value to be <c>ValueSome</c>, otherwise returns an error result. </summary>
     /// <param name="value">The value to check.</param>

@@ -1,6 +1,8 @@
 namespace Viva.Playwright
 
 open System
+open System.Runtime.CompilerServices
+open System.Runtime.InteropServices
 open Microsoft.Extensions.Logging
 open FsToolkit.ErrorHandling
 open Microsoft.Playwright
@@ -8,79 +10,164 @@ open Viva.Runtime.Helpers
 open Viva.Runtime.Helpers.Operator.Result
 open Viva.Runtime.Extensions
 
-type LocatorContext = {
-    PageContext: PageContext
-    Logger: ILogger
-    Locator: ILocator
-    LocatorString: string
-}
+/// <summary> Extensions for <see cref="LocatorContext"/>. </summary>
+/// <category> Extensions </category>
+[<Extension>]
+type LocatorContextExtensions =
 
-module LocatorContext =
-    let private toLocatorContext locatorSting (context: PageContext) locator = {
-        PageContext = context
-        Logger = context.LoggerFactory.CreateLogger<LocatorContext>()
-        Locator = locator
-        LocatorString = locatorSting
-    }
+    /// <summary> Closes the <see cref="LocatorContext"/>. </summary>
+    /// <param name="context"> The <see cref="LocatorContext"/>. </param>
+    /// <returns> The <see cref="PageContext"/>. </returns>
+    [<Extension>]
+    static member Close(context: LocatorContext) = context.PageContext
 
-    let ignoreActiveLocator(context: LocatorContext) = context.PageContext
+    [<Extension>]
+    static member Refine(context: LocatorContext, refine) =
+        let newLocator, newLocatorString = refine context.Locator context.LocatorString
+        LocatorContext.Create(newLocator, context.PageContext, newLocatorString)
 
-    let getByLabel (name: string) exact (context: PageContext) =
-        context.Page.GetByLabel(name, PageGetByLabelOptions(Exact = (exact |> ValueOption.toNullable)))
-        |> toLocatorContext $"Label => '{name}'" context
+    /// <summary> Click the element represented by the locator. </summary>
+    /// <param name="this"> The <see cref="LocatorContext"/>. </param>
+    /// <param name="button"> The mouse button to click. Defaults to <see cref="MouseButton.Left"/>. </param>
+    /// <param name="clickCount"> The number of times to click. Defaults to <c>1</c>. </param>
+    /// <param name="delay"> The time to wait before clicking. Defaults to <c>0 ms</c>. </param>
+    /// <param name="force"> <c>true</c> to bypass the actionability checks. Defaults to <c>false</c>. </param>
+    /// <param name="modifiers"> Modifier keys to press. Any keys pressed will be passed if <paramref name="force"/> is not set. Defaults to <c>null</c>.</param>
+    /// <param name="position"> The relative position inside the element to click. </param>
+    /// <param name="timeout"> The maximum time to wait for the element to be clickable. Defaults to <c>0 ms</c>. </param>
+    /// <param name="Trial"> Performs actionability checks including key presses but mouse click is not performed. Defaults to <c>false</c>. </param>
+    /// <returns> If successful, the <see cref="LocatorContext"/>; otherwise, the error. </returns>
+    [<Extension>]
+    static member Click
+        (
+            this: LocatorContext,
+            [<Optional; DefaultParameterValue(MouseButton.Left)>] button,
+            [<Optional; DefaultParameterValue(1)>] clickCount,
+            [<Optional>] delay: TimeSpan,
+            [<Optional; DefaultParameterValue(false)>] force,
+            [<Optional>] modifiers,
+            [<Optional; DefaultParameterValue(null: Position | null)>] position,
+            [<Optional>] timeout: TimeSpan,
+            [<Optional; DefaultParameterValue(false)>] Trial
+        ) =
+        result {
+            let logger = this.Logger
 
-    let getByRole role name exact (context: PageContext) =
-        context.Page.GetByRole(role, PageGetByRoleOptions(Name = name, Exact = (exact |> ValueOption.toNullable)))
-        |> toLocatorContext $"'{role}' named '{name}'" context
+            do!
+                this.Locator
+                    .ClickAsync(
+                        LocatorClickOptions(
+                            Button = Nullable button,
+                            ClickCount = Nullable clickCount,
+                            Delay = delay.ToNullableMilliseconds(),
+                            Force = Nullable force,
+                            Modifiers = modifiers,
+                            Position = position,
+                            Timeout = timeout.ToNullableMilliseconds(),
+                            Trial = Nullable Trial
+                        )
+                    )
+                    .AwaitResult()
+                |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to click {locator}.", this.LocatorString))
 
-    let getBySelector selector (hasText: string voption) (context: PageContext) =
-        context.Page.Locator(
-            selector,
-            if hasText.IsSome then
-                PageLocatorOptions(HasText = hasText.Value)
-            else
-                null
-        )
-        |> toLocatorContext $"selector => '{selector}'" context
+            logger.LogInformation("Clicked {locator}.", this.LocatorString)
+            return this
+        }
 
-    let click (timeOut: TimeSpan voption) (delay: TimeSpan voption) (context: LocatorContext) =
-        let logger = context.Logger
+    /// <summary> Click the element represented by the locator and close the <see cref="LocatorContext"/>. </summary>
+    /// <param name="this"> The <see cref="LocatorContext"/>. </param>
+    /// <param name="button"> The mouse button to click. Defaults to <see cref="MouseButton.Left"/>. </param>
+    /// <param name="clickCount"> The number of times to click. Defaults to <c>1</c>. </param>
+    /// <param name="delay"> The time to wait before clicking. Defaults to <c>0 ms</c>. </param>
+    /// <param name="force"> <c>true</c> to bypass the actionability checks. Defaults to <c>false</c>. </param>
+    /// <param name="modifiers"> Modifier keys to press. Any keys pressed will be passed if <paramref name="force"/> is not set. Defaults to <c>null</c>.</param>
+    /// <param name="position"> The relative position inside the element to click. </param>
+    /// <param name="timeout"> The maximum time to wait for the element to be clickable. Defaults to <c>0 ms</c>. </param>
+    /// <param name="Trial"> Performs actionability checks including key presses but mouse click is not performed. Defaults to <c>false</c>. </param>
+    /// <returns> If successful, the <see cref="PageContext"/>; otherwise, the error. </returns>
+    [<Extension>]
+    static member ClickAndClose
+        (
+            this: LocatorContext,
+            [<Optional; DefaultParameterValue(MouseButton.Left)>] button,
+            [<Optional; DefaultParameterValue(1)>] clickCount,
+            [<Optional>] delay: TimeSpan,
+            [<Optional; DefaultParameterValue(false)>] force,
+            [<Optional>] modifiers,
+            [<Optional; DefaultParameterValue(null: Position | null)>] position,
+            [<Optional>] timeout: TimeSpan,
+            [<Optional; DefaultParameterValue(false)>] Trial
+        ) =
+        this.Click(button, clickCount, delay, force, modifiers, position, timeout, Trial)
+        <!> _.Close()
 
-        context.Locator
-            .ClickAsync(LocatorClickOptions(Timeout = timeOut.ToNullableMilliseconds(), Delay = delay.ToNullableMilliseconds()))
-            .AwaitResult()
-        <!> (fun _ -> context)
-        |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to click {locator}.", context.LocatorString))
-        |> Result.tee(fun _ -> logger.LogInformation("Clicked {locator}.", context.LocatorString))
+    /// <summary> Fill the element represented by the locator. </summary>
+    /// <param name="this"> The <see cref="LocatorContext"/>. </param>
+    /// <param name="text"> The text to fill. </param>
+    /// <param name="force"> <c>true</c> to bypass the actionability checks. Defaults to <c>false</c>. </param>
+    /// <param name="timeout"> The maximum time to wait for the element to be fillable. Defaults to <c>0 ms</c>. </param>
+    /// <returns> If successful, the <see cref="LocatorContext"/>; otherwise, the error. </returns>
+    [<Extension>]
+    static member Fill
+        (this: LocatorContext, text: string, [<Optional; DefaultParameterValue(false)>] force, [<Optional>] timeout: TimeSpan)
+        =
+        result {
+            let logger = this.Logger
 
-    let clickByLabel name (timeOut: TimeSpan voption) (delay: TimeSpan voption) (context: PageContext) =
-        getByLabel name ValueOption.None context |> click timeOut delay
-        <!> (fun _ -> context)
+            do!
+                this.Locator
+                    .FillAsync(text, LocatorFillOptions(Force = Nullable force, Timeout = timeout.ToNullableMilliseconds()))
+                    .AwaitResult()
+                |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to fill {locator}.", this.LocatorString))
 
-    let clickByRole role name (timeOut: TimeSpan voption) (delay: TimeSpan voption) (context: PageContext) =
-        getByRole role name ValueOption.None context |> click timeOut delay
-        <!> (fun _ -> context)
+            logger.LogInformation("Filled {locator} with value '{value}'.", this.LocatorString, text)
+            return this
+        }
 
-    let clickBySelector selector (hasText: string voption) (timeOut: TimeSpan voption) (delay: TimeSpan voption) (context: PageContext) =
-        getBySelector selector hasText context |> click timeOut delay
-        <!> (fun _ -> context)
+    /// <summary> Fill the element represented by the locator and close the <see cref="LocatorContext"/>. </summary>
+    /// <param name="this"> The <see cref="LocatorContext"/>. </param>
+    /// <param name="text"> The text to fill. </param>
+    /// <param name="force"> <c>true</c> to bypass the actionability checks. Defaults to <c>false</c>. </param>
+    /// <param name="timeout"> The maximum time to wait for the element to be fillable. Defaults to <c>0 ms</c>. </param>
+    /// <returns> If successful, the <see cref="PageContext"/>; otherwise, the error. </returns>
+    [<Extension>]
+    static member FillAndClose
+        (this: LocatorContext, text: string, [<Optional; DefaultParameterValue(false)>] force, [<Optional>] timeout: TimeSpan)
+        =
+        this.Fill(text, force, timeout) <!> _.Close()
 
-    let fill value (timeOut: TimeSpan voption) (context: LocatorContext) =
-        let logger = context.Logger
+    /// <summary> Press the key(s) to the element represented by the locator. </summary>
+    /// <param name="this"> The <see cref="LocatorContext"/>. </param>
+    /// <param name="text"> The key stroke(s) to press. </param>
+    /// <param name="delay"> The time to wait between key presses. Defaults to <c>0 ms</c>. </param>
+    /// <param name="timeout"> The maximum time to wait for the element to be fillable. Defaults to <c>0 ms</c>. </param>
+    /// <returns> If successful, the <see cref="LocatorContext"/>; otherwise, the error. </returns>
+    [<Extension>]
+    static member Press(this: LocatorContext, text: string, [<Optional>] delay: TimeSpan, [<Optional>] timeout: TimeSpan) =
+        result {
+            let logger = this.Logger
 
-        context.Locator.FillAsync(value, LocatorFillOptions(Timeout = timeOut.ToNullableMilliseconds())).AwaitResult()
-        <!> (fun _ -> context)
-        |> Result.teeError(fun ex -> logger.LogError(ex, "Failed to fill {locator} with value '{value}'.", context.LocatorString, value))
-        |> Result.tee(fun _ -> logger.LogInformation("Filled {locator} with value '{value}'.", context.LocatorString, value))
+            do!
+                this.Locator
+                    .PressAsync(
+                        text,
+                        LocatorPressOptions(Delay = delay.ToNullableMilliseconds(), Timeout = timeout.ToNullableMilliseconds())
+                    )
+                    .AwaitResult()
+                |> Result.teeError(fun ex ->
+                    logger.LogError(ex, "Failed to send key stroke(s) '{value}' to {locator}.", text, this.LocatorString)
+                )
 
-    let press value (timeOut: TimeSpan voption) (delay: TimeSpan voption) (context: LocatorContext) =
-        let logger = context.Logger
+            logger.LogInformation("Sent key stroke(s) '{value}' to {locator}.", text, this.LocatorString)
+            return this
+        }
 
-        context.Locator
-            .PressAsync(value, LocatorPressOptions(Timeout = timeOut.ToNullableMilliseconds(), Delay = delay.ToNullableMilliseconds()))
-            .AwaitResult()
-        <!> (fun _ -> context)
-        |> Result.teeError(fun ex ->
-            logger.LogError(ex, "Failed to send key stroke(s) '{value}' to {locator}.", value, context.LocatorString)
-        )
-        |> Result.tee(fun _ -> logger.LogInformation("Sent key stroke(s) '{value}' to {locator}.", value, context.LocatorString))
+    /// <summary> Press the key(s) to the element represented by the locator and close the <see cref="LocatorContext"/>. </summary>
+    /// <param name="this"> The <see cref="LocatorContext"/>. </param>
+    /// <param name="text"> The key stroke(s) to press. </param>
+    /// <param name="delay"> The time to wait between key presses. Defaults to <c>0 ms</c>. </param>
+    /// <param name="timeout"> The maximum time to wait for the element to be fillable. Defaults to <c>0 ms</c>. </param>
+    /// <returns> If successful, the <see cref="PageContext"/>; otherwise, the error. </returns>
+    [<Extension>]
+    static member PressAndClose(this: LocatorContext, text: string, [<Optional>] delay: TimeSpan, [<Optional>] timeout: TimeSpan) =
+        this.Press(text, delay, timeout) <!> _.Close()
