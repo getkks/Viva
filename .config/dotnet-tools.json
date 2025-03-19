@@ -1,27 +1,27 @@
 {
-	"version": 1,
-	"isRoot": true,
-	"tools": {
-		"fantomas": {
-			"version": "7.0.0",
-			"commands": [
-				"fantomas"
-			],
-			"rollForward": true
-		},
-		"dotnet-releaser": {
-			"version": "0.11.0",
-			"commands": [
-				"dotnet-releaser"
-			],
-			"rollForward": true
-		},
-		"fsdocs-tool": {
-			"version": "20.0.1",
-			"commands": [
-				"fsdocs"
-			],
-			"rollForward": true
-		}
-	}
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "fantomas": {
+      "version": "7.0.1",
+      "commands": [
+        "fantomas"
+      ],
+      "rollForward": true
+    },
+    "dotnet-releaser": {
+      "version": "0.11.0",
+      "commands": [
+        "dotnet-releaser"
+      ],
+      "rollForward": true
+    },
+    "fsdocs-tool": {
+      "version": "20.0.1",
+      "commands": [
+        "fsdocs"
+      ],
+      "rollForward": true
+    }
+  }
 }
