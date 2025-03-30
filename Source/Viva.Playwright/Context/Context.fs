@@ -13,10 +13,18 @@ open Viva.Runtime.Extensions
 type TypeOfBrowser =
     /// <summary> Google Chrome browser. </summary>
     | Chrome
+    /// <summary> Google Chrome Beta browser. </summary>
+    | ``Chrome-Beta``
+    /// <summary> Google Chrome Dev browser. </summary>
+    | ``Chrome-Dev``
     /// <summary> Chromium browser. </summary>
     | Chromium
     /// <summary> Microsoft Edge browser. </summary>
     | MsEdge
+    /// <summary> Microsoft Edge Beta browser. </summary>
+    | ``MsEdge-Beta``
+    /// <summary> Microsoft Edge Dev browser. </summary>
+    | ``MsEdge-Dev``
     /// <summary> Mozilla Firefox browser. </summary>
     | Firefox
     /// <summary> Webkit browser. </summary>
@@ -25,8 +33,12 @@ type TypeOfBrowser =
     override this.ToString() =
         match this with
         | Chrome -> "Chrome"
+        | ``Chrome-Beta`` -> "Chrome-Beta"
+        | ``Chrome-Dev`` -> "Chrome-Dev"
         | Chromium -> "Chromium"
         | MsEdge -> "MsEdge"
+        | ``MsEdge-Beta`` -> "MsEdge-Beta"
+        | ``MsEdge-Dev`` -> "MsEdge-Dev"
         | Firefox -> "Firefox"
         | Webkit -> "Webkit"
 
@@ -34,7 +46,11 @@ type TypeOfBrowser =
     member this.Channel =
         match this with
         | Chrome -> "chrome"
+        | ``Chrome-Beta`` -> "chrome-beta"
+        | ``Chrome-Dev`` -> "chrome-dev"
         | MsEdge -> "msedge"
+        | ``MsEdge-Beta`` -> "msedge-beta"
+        | ``MsEdge-Dev`` -> "msedge-dev"
         | Chromium
         | Firefox
         | Webkit -> ""
@@ -45,8 +61,12 @@ type TypeOfBrowser =
     member this.GetBrowserType(playwright: IPlaywright) =
         match this with
         | Chrome
+        | ``Chrome-Beta``
+        | ``Chrome-Dev``
         | Chromium
-        | MsEdge -> playwright.Chromium
+        | MsEdge
+        | ``MsEdge-Beta``
+        | ``MsEdge-Dev`` -> playwright.Chromium
         | Firefox -> playwright.Firefox
         | Webkit -> playwright.Webkit
 

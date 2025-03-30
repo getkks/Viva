@@ -35,7 +35,7 @@ type LocatorContextExtensions =
     /// <param name="modifiers"> Modifier keys to press. Any keys pressed will be passed if <paramref name="force"/> is not set. Defaults to <c>null</c>.</param>
     /// <param name="position"> The relative position inside the element to click. </param>
     /// <param name="timeout"> The maximum time to wait for the element to be clickable. Defaults to <c>0 ms</c>. </param>
-    /// <param name="Trial"> Performs actionability checks including key presses but mouse click is not performed. Defaults to <c>false</c>. </param>
+    /// <param name="trial"> Performs actionability checks including key presses but mouse click is not performed. Defaults to <c>false</c>. </param>
     /// <returns> If successful, the <see cref="LocatorContext"/>; otherwise, the error. </returns>
     [<Extension>]
     static member Click
@@ -48,7 +48,7 @@ type LocatorContextExtensions =
             [<Optional>] modifiers,
             [<Optional; DefaultParameterValue(null: Position | null)>] position,
             [<Optional>] timeout: TimeSpan,
-            [<Optional; DefaultParameterValue(false)>] Trial
+            [<Optional; DefaultParameterValue(false)>] trial
         ) =
         result {
             let logger = this.Logger
@@ -64,7 +64,7 @@ type LocatorContextExtensions =
                             Modifiers = modifiers,
                             Position = position,
                             Timeout = timeout.ToNullableMilliseconds(),
-                            Trial = Nullable Trial
+                            Trial = Nullable trial
                         )
                     )
                     .AwaitResult()
@@ -83,7 +83,7 @@ type LocatorContextExtensions =
     /// <param name="modifiers"> Modifier keys to press. Any keys pressed will be passed if <paramref name="force"/> is not set. Defaults to <c>null</c>.</param>
     /// <param name="position"> The relative position inside the element to click. </param>
     /// <param name="timeout"> The maximum time to wait for the element to be clickable. Defaults to <c>0 ms</c>. </param>
-    /// <param name="Trial"> Performs actionability checks including key presses but mouse click is not performed. Defaults to <c>false</c>. </param>
+    /// <param name="trial"> Performs actionability checks including key presses but mouse click is not performed. Defaults to <c>false</c>. </param>
     /// <returns> If successful, the <see cref="PageContext"/>; otherwise, the error. </returns>
     [<Extension>]
     static member ClickAndClose
@@ -96,9 +96,9 @@ type LocatorContextExtensions =
             [<Optional>] modifiers,
             [<Optional; DefaultParameterValue(null: Position | null)>] position,
             [<Optional>] timeout: TimeSpan,
-            [<Optional; DefaultParameterValue(false)>] Trial
+            [<Optional; DefaultParameterValue(false)>] trial
         ) =
-        this.Click(button, clickCount, delay, force, modifiers, position, timeout, Trial)
+        this.Click(button, clickCount, delay, force, modifiers, position, timeout, trial)
         <!> _.Close()
 
     /// <summary> Fill the element represented by the locator. </summary>

@@ -97,7 +97,7 @@ type PageContextExtensions =
     /// <param name="expanded"> The expanded state of the element. </param>
     /// <param name="includeHidden"> If true, include hidden elements in the search. </param>
     /// <param name="level"> The level of the element. </param>
-    /// <param name="NameRegex"> The regular expression to match the name of the element. </param>
+    /// <param name="nameRegex"> The regular expression to match the name of the element. </param>
     /// <param name="nameString"> The string to match accessible name of the element. </param>
     /// <param name="pressed"> The pressed state of the element. </param>
     /// <param name="selected"> The selected state of the element. </param>
@@ -114,7 +114,7 @@ type PageContextExtensions =
             [<Optional>] expanded,
             [<Optional>] includeHidden,
             [<Optional>] level,
-            [<Optional>] NameRegex,
+            [<Optional>] nameRegex,
             [<Optional>] nameString,
             [<Optional>] pressed,
             [<Optional>] selected
@@ -130,7 +130,7 @@ type PageContextExtensions =
                     Expanded = expanded,
                     IncludeHidden = includeHidden,
                     Level = level,
-                    NameRegex = NameRegex,
+                    NameRegex = nameRegex,
                     NameString = nameString,
                     Pressed = pressed,
                     Selected = selected

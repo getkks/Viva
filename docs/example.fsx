@@ -3,14 +3,18 @@
 
 This examples demonstrates how to use Viva.Playwright to interact with a website.
 
--  Opens youtube.com
--  Sets a default timeout of 30 minutes
--  Fills the search box with "linux"
--  Presses the arrow down key
--  Presses the enter key
--  Clicks the "Search filters" button
--  Clicks the "This year" filter
--  Closes the browser
+-  Create a logger factory
+-  Create a browser
+-  Open https://www.youtube.com/
+-  Set default timeout of 30 minutes
+-  Select and fill the search box with "linux"
+-  Press the arrow down key
+-  Press the enter key
+-  Click the "Search filters" button and close the locator
+-  Click the "This year" filter and close the locator
+-  Wait for 5 seconds
+-  Close the browser
+-  Cleanup as ncessary
 *)
 (*** hide ***)
 #r "/tmp/Artifacts/bin/Viva.Playwright/debug/Viva.Playwright.dll"
@@ -46,11 +50,15 @@ let factory =
         |> ignore
     )
 
-MsEdge.Create(factory, BrowserTypeLaunchOptions(Headless = false), BrowserNewContextOptions(ViewportSize = ViewportSize.NoViewport))
+``MsEdge-Beta``.Create(
+    factory,
+    BrowserTypeLaunchOptions(Headless = false),
+    BrowserNewContextOptions(ViewportSize = ViewportSize.NoViewport)
+)
 >>= _.Open("https://www.youtube.com/")
 <!> _.SetDefaultTimeOut(TimeSpan.FromMinutes 30L)
 <!> _.GetByRole(AriaRole.Combobox, "Search")
->>= _.Fill("linux brtfs")
+>>= _.Fill("linux")
 >>= _.Press("ArrowDown")
 >>= _.PressAndClose("Enter")
 <!> _.GetByLabel("Search filters")
@@ -64,7 +72,3 @@ MsEdge.Create(factory, BrowserTypeLaunchOptions(Headless = false), BrowserNewCon
 |> ignore
 
 factory.Dispose()
-(**
-## Console Output
-*)
-(*** include-fsi-merged-output ***)
