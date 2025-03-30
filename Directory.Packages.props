@@ -2,7 +2,7 @@
     <ItemGroup>
         <PackageVersion Include="Avalonia" Version="11.2.6" />
         <PackageVersion Include="Avalonia.Desktop" Version="11.2.6" />
-        <PackageVersion Include="Avalonia.Diagnostics" Version="11.2.6" />
+        <PackageVersion Include="Avalonia.Diagnostics" Version="11.2.6" Condition="'$(Configuration)'=='Debug'" />
         <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.2.6" />
         <PackageVersion Include="Avalonia.FuncUI" Version="1.5.1" />
         <PackageVersion Include="Avalonia.FuncUI.Elmish" Version="1.5.1" />
@@ -20,7 +20,10 @@
         <PackageVersion Include="GitVersion.MsBuild" Version="6.1.0" />
         <PackageVersion Include="IcedTasks" Version="0.11.7" />
         <PackageVersion Include="InfoOf.Fody" Version="2.2.0" />
-        <PackageVersion Include="InlineIL.Fody" Version="1.10.0" />
+        <PackageVersion Include="InlineIL.Fody" Version="1.10.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageVersion>
         <PackageVersion Include="LocalsInit.Fody" Version="1.1.0" />
         <PackageVersion Include="Material.Icons.Avalonia" Version="2.3.1" />
         <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.3" />

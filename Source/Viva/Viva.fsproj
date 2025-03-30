@@ -2,12 +2,14 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.fs" />
     <None Include="readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Avalonia.Themes.Fluent" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="FsToolkit.ErrorHandling" />
     <PackageReference Include="GitVersion.MsBuild">
@@ -18,9 +20,11 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" />
     <PackageReference Include="Microsoft.Playwright" />
+    <!-- <PackageReference Include="SukiUI" /> -->
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Viva.Runtime\Viva.Runtime.fsproj" />
     <ProjectReference Include="..\Viva.Playwright\Viva.Playwright.fsproj" />
+    <ProjectReference Include="..\Viva.UI\Viva.UI.fsproj" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="./Assets/Fonts/**/**" />
+    <Compile Include="Runtime/Resource/IResource.fs" />
+    <Compile Include="Runtime/Resource/Resource.fs" />
+    <Compile Include="Runtime/Extensions/Unicolour.fs" />
+    <Compile Include="Runtime/Extensions/TemplateBinding.fs" />
+    <Compile Include="Runtime/Extensions/ControlTheme.fs" />
+    <Compile Include="Runtime/Extensions/StyledElement.fs" />
+    <Compile Include="Runtime/Extensions/Transitions.fs" />
+    <Compile Include="Controls/MaterialIcon.fs" />
+    <Compile Include="Controls/CaptionButtons.fs" />
+    <Compile Include="Controls/Host/Window.fs" />
+	<Compile Include="Theme/Controls/Button/Button.fs" />
+    <Compile Include="Theme/Controls/Host/WindowTheme.fs" />
+	<Compile Include="Theme/Colors.fs" />
+    <Compile Include="Theme/VivaTheme.fs" />
+    <Compile Include="HostApplication.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Diagnostics" Condition="'$(Configuration)'=='Debug'" />
+    <PackageReference Include="Avalonia.Fonts.Inter" />
+    <PackageReference Include="Avalonia.FuncUI.Elmish" />
+    <PackageReference Include="Avalonia.FuncUI" />
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="Avalonia.Themes.Simple" />
+    <PackageReference Include="Elmish" />
+    <PackageReference Include="Fody">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="FSharp.Core" />
+    <PackageReference Include="FsToolkit.ErrorHandling" />
+    <PackageReference Include="InlineIL.Fody" >
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Material.Icons.Avalonia" />
+    <PackageReference Include="FluentAvaloniaUI" />
+    <PackageReference Include="SkiaSharp" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" />
+    <PackageReference Include="Wacton.Unicolour" />
+  </ItemGroup>
+</Project>
