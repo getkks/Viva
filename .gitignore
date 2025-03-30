@@ -485,3 +485,4 @@ artifacts-dotnet-releaser/
 .fsdocs/
 output/
 tmp/
+.backup/
