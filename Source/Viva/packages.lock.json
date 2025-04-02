@@ -28,9 +28,12 @@
       },
       "GitVersion.MsBuild": {
         "type": "Direct",
-        "requested": "[6.1.0, )",
-        "resolved": "6.1.0",
-        "contentHash": "qZFJ+vJQp/BybHH15RUq15Cg46tHXVKaxwdDFEvrA3MjClEXHpmDwKQzvaPOk9ysS2h6A+fOzcsyXiXqRbF5ZA=="
+        "requested": "[6.2.0, )",
+        "resolved": "6.2.0",
+        "contentHash": "EZoFyY1fgHkYtCz0nizYAXsfNG0OSllMuRQl4fFosDNKz6y/f2nctSCjwhTMh5GSkzRZEnyd+YA540VD7SAm+A==",
+        "dependencies": {
+          "System.Collections.Immutable": "9.0.2"
+        }
       },
       "IcedTasks": {
         "type": "Direct",
@@ -467,6 +470,11 @@
         "resolved": "3.118.0-preview.2.3",
         "contentHash": "eiCGyg8WW7poEFxjPilSBIYVBsLb0cfYdHZeSaLeeUiVh8HUF0jPznp6QtGk4M55S9nvDERUZh6NXvjBbHPrZg=="
       },
+      "System.Collections.Immutable": {
+        "type": "Transitive",
+        "resolved": "9.0.2",
+        "contentHash": "QKh9+kczG7TQbQZ6tF2S6bK9B8ewHXEkYmMP2iqefzwJEfEkiflheAX6VEaPLJ6Tq9RoKuQ5R3qPYla6wJ6Opg=="
+      },
       "System.ComponentModel.Annotations": {
         "type": "Transitive",
         "resolved": "5.0.0",
@@ -547,7 +555,6 @@
           "FSharp.Core": "[9.0.201, )",
           "FluentAvaloniaUI": "[2.3.0, )",
           "FsToolkit.ErrorHandling": "[4.18.0, )",
-          "InlineIL.Fody": "[1.10.0, )",
           "Material.Icons.Avalonia": "[2.3.1, )",
           "SkiaSharp": "[3.118.0-preview.2.3, )",
           "SkiaSharp.NativeAssets.Linux": "[3.118.0-preview.2.3, )",
@@ -647,15 +654,6 @@
           "Avalonia.Controls.DataGrid": "11.2.5",
           "Avalonia.Skia": "11.2.5",
           "MicroCom.Runtime": "0.11.0"
-        }
-      },
-      "InlineIL.Fody": {
-        "type": "CentralTransitive",
-        "requested": "[1.10.0, )",
-        "resolved": "1.10.0",
-        "contentHash": "BndPPxQ0mwbWPP61pk29UE5/qLtbsC0ZL4SUst5Lrmde9KWjnjYcQlfIZVbzoIY+wyfPsH6B7dPzOadABC435Q==",
-        "dependencies": {
-          "Fody": "6.9.0"
         }
       },
       "Material.Icons.Avalonia": {
