@@ -14,10 +14,10 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageVersion>
-        <PackageVersion Include="FSharp.Core" Version="9.0.201" />
+        <PackageVersion Include="FSharp.Core" Version="9.0.202" />
         <PackageVersion Include="FSharpPlus" Version="1.7.0" />
         <PackageVersion Include="FsToolkit.ErrorHandling" Version="4.18.0" />
-        <PackageVersion Include="GitVersion.MsBuild" Version="6.1.0" />
+        <PackageVersion Include="GitVersion.MsBuild" Version="6.2.0" />
         <PackageVersion Include="IcedTasks" Version="0.11.7" />
         <PackageVersion Include="InfoOf.Fody" Version="2.2.0" />
         <PackageVersion Include="InlineIL.Fody" Version="1.10.0">
@@ -26,9 +26,9 @@
         </PackageVersion>
         <PackageVersion Include="LocalsInit.Fody" Version="1.1.0" />
         <PackageVersion Include="Material.Icons.Avalonia" Version="2.3.1" />
-        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
-        <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.3" />
-        <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.3" />
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
+        <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.4" />
+        <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.4" />
         <PackageVersion Include="Microsoft.Playwright" Version="1.51.0" />
         <PackageVersion Include="SkiaSharp" Version="3.118.0-preview.2.3" />
         <PackageVersion Include="SkiaSharp.NativeAssets.Linux" Version="3.118.0-preview.2.3" />
