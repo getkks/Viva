@@ -1,23 +1,23 @@
 <Project>
     <ItemGroup>
-        <PackageVersion Include="Avalonia" Version="11.2.6" />
-        <PackageVersion Include="Avalonia.Desktop" Version="11.2.6" />
-        <PackageVersion Include="Avalonia.Diagnostics" Version="11.2.6" Condition="'$(Configuration)'=='Debug'" />
-        <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.2.6" />
+        <PackageVersion Include="Avalonia" Version="11.2.8" />
+        <PackageVersion Include="Avalonia.Desktop" Version="11.2.8" />
+        <PackageVersion Include="Avalonia.Diagnostics" Version="11.2.8" Condition="'$(Configuration)'=='Debug'" />
+        <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.2.8" />
         <PackageVersion Include="Avalonia.FuncUI" Version="1.5.1" />
         <PackageVersion Include="Avalonia.FuncUI.Elmish" Version="1.5.1" />
-        <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.2.6" />
-        <PackageVersion Include="Avalonia.Themes.Simple" Version="11.2.6" />
+        <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.2.8" />
+        <PackageVersion Include="Avalonia.Themes.Simple" Version="11.2.8" />
         <PackageVersion Include="Elmish" Version="4.3.0" />
         <PackageVersion Include="FluentAvaloniaUI" Version="2.3.0" />
         <PackageVersion Include="Fody" Version="6.9.2">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageVersion>
-        <PackageVersion Include="FSharp.Core" Version="9.0.201" />
+        <PackageVersion Include="FSharp.Core" Version="9.0.202" />
         <PackageVersion Include="FSharpPlus" Version="1.7.0" />
         <PackageVersion Include="FsToolkit.ErrorHandling" Version="4.18.0" />
-        <PackageVersion Include="GitVersion.MsBuild" Version="6.1.0" />
+        <PackageVersion Include="GitVersion.MsBuild" Version="6.3.0" />
         <PackageVersion Include="IcedTasks" Version="0.11.7" />
         <PackageVersion Include="InfoOf.Fody" Version="2.2.0" />
         <PackageVersion Include="InlineIL.Fody" Version="1.10.0">
@@ -25,13 +25,13 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageVersion>
         <PackageVersion Include="LocalsInit.Fody" Version="1.1.0" />
-        <PackageVersion Include="Material.Icons.Avalonia" Version="2.3.1" />
-        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
-        <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.3" />
-        <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.3" />
-        <PackageVersion Include="Microsoft.Playwright" Version="1.51.0" />
-        <PackageVersion Include="SkiaSharp" Version="3.118.0-preview.2.3" />
-        <PackageVersion Include="SkiaSharp.NativeAssets.Linux" Version="3.118.0-preview.2.3" />
-        <PackageVersion Include="Wacton.Unicolour" Version="5.0.0" />
+        <PackageVersion Include="Material.Icons.Avalonia" Version="2.4.1" />
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
+        <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.4" />
+        <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.4" />
+        <PackageVersion Include="Microsoft.Playwright" Version="1.52.0" />
+        <PackageVersion Include="SkiaSharp" Version="3.119.0" />
+        <PackageVersion Include="SkiaSharp.NativeAssets.Linux" Version="3.119.0" />
+        <PackageVersion Include="Wacton.Unicolour" Version="6.0.0" />
     </ItemGroup>
 </Project>
